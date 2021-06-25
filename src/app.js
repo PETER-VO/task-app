@@ -1,21 +1,15 @@
 const express = require('express')
-const {User} = require('./model/user')
 require('./db/mongoose')
+
+const userRouter = require('./routers/user')
 
 const app = express()
 
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
-const user = new User({
-    name: 'Phong',
-    age: 22
-})
+app.use(express.json())
 
-user.save().then(() => {
-    console.log(user)
-}).catch((error) => {
-    console.log(error)
-})
+app.use(userRouter)
 
 
 app.listen(port, () => {
