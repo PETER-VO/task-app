@@ -8,7 +8,7 @@ router.post('/users', async (req, res) => {
     console.log(user)
     try{
         await user.save()
-        res.status(200).send()
+        res.status(200).send(user)
     }catch(e){
         res.status(400).send(e)
     }
