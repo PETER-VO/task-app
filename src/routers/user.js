@@ -1,6 +1,7 @@
 const express = require('express')
 require('../db/mongoose')
 const User = require('../model/user')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
@@ -24,7 +25,7 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
-router.get('/users', async (req, res) => {
+router.get('/users', auth, async (req, res) => {
     try{
         const users = await User.find({})
         res.status(200).send(users)
