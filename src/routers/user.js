@@ -19,7 +19,7 @@ router.post('/users/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        return res.status(200).send({user, token})
+        return res.status(200).send({user: user.getPublicProfile(), token})
     }catch(e){
         res.status(400).send(e)
     }
@@ -34,7 +34,7 @@ router.get('/users', auth, async (req, res) => {
     }
 })
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', auth, async (req, res) => {
     try{
         const users = await User.findByIdAndDelete(req.params.id)
         res.status(200).send(users)
